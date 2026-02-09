@@ -158,7 +158,7 @@ while program_berjalan == "ya":
                 else:
                     print("Password harus kombinasi huruf besar, huruf kecil, angka, dan karakter khusus (/.,@#$%)")
     
-        # ----- Validasi Email -----
+        # ----- Validasi Email ----- (yg di Assingnment 1 di paling atas)
         status_email = "belum valid"
 
         while status_email == "belum valid":
@@ -169,77 +169,6 @@ while program_berjalan == "ya":
             if hasil == "Alamat Email yg anda Masukkan Valid":
                 status_email = "sudah valid"
     
-
-# ## ----- Registrataion Email Validation (yg di Assingnment 1 di paling atas)-----
-# def validasi_email(Email):
-#     # Cek jumlah @
-#     if Email.count("@") != 1:
-#         return "Format Email salah (harus memiliki '@')"
-    
-#     # Split dengan @
-#     bagian = Email.split("@")
-#     User = bagian[0]
-#     sisa = bagian[1]
-    
-#     # Validasi User tidak kosong
-#     if User == "":
-#         return "Format Username tidak boleh kosong"
-    
-#     # User harus diawali huruf atau angka
-#     if not User[0].isalnum():
-#         return "Format Username harus diawali huruf atau angka)"
-    
-#     # User hanya boleh huruf, angka, underscore, dan dot
-#     i = 0
-#     while i < len(User):
-#         char = User[i]
-#         if not (char.isalnum() or char == '_' or char == '.'):
-#             return "Format Username mengandung karakter tidak valid"
-#         i += 1
-    
-#     # Cek apakah ada ekstensi (minimal 1 dot)
-#     if sisa.count(".") < 1:
-#         return "Format Email harus memiliki ekstensi"
-    
-#     # Cek maksimal 2 dot untuk ekstensi
-#     if sisa.count(".") > 2:
-#         return "Format Ekstensi maksimal 2 dot"
-    
-#     # Split hosting dan ekstensi
-#     parts = sisa.split(".")
-#     Hosting = parts[0]
-#     Ekstensi = parts[1:]
-    
-#     # Validasi Hosting tidak boleh kosong
-#     if Hosting == "":
-#         return "Format Hosting tidak boleh kosong"
-    
-#     # Hosting hanya boleh huruf dan angka
-#     i = 0
-#     while i < len(Hosting):
-#         if not Hosting[i].isalnum():
-#             return "Format Hosting hanya boleh huruf dan angka"
-#         i += 1
-    
-#     # Validasi setiap ekstensi
-#     idx = 0
-#     while idx < len(Ekstensi):
-#         ext = Ekstensi[idx]
-        
-#         if ext == "":
-#             return "Format Ekstensi belum dimasukkan"
-        
-#         # Ekstensi hanya boleh huruf
-#         if not ext.isalpha():
-#             return "Format Ekstensi hanya boleh huruf"
-        
-#         # Ekstensi maksimal 5 karakter
-#         if len(ext) > 5:
-#             return "Format Ekstensi maksimal 5 karakter"
-        
-#         idx += 1
-    
-#     return "Alamat Email yg anda Masukkan Valid"
 
 
 ## ----- Profile Registration -----
