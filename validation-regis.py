@@ -359,60 +359,59 @@ while program_berjalan == "ya":
     elif opsi == "2":
         print("\n----- Login -----")
         
-        login_berhasil = "belum"
-        batas_login = 5
+        login_berhasil = False
+        coba = 0
+        batas_coba = 5
 
-        while login_berhasil == "belum" and batas_login <= 5:
+        while not login_berhasil and coba < batas_coba:
             userid_login = input("Masukkan ID: ")
             password_login = input("Masukkan Password: ")
 
-        # cek id terdaftar/belum    
-        if userid_login not in userid_terdaftar:
-            print("ID Tidak Terdaftar. Silakan registrasi.")
-            print("Sisa percobaan login:", 3 - batas_login)
-            batas_login -= 1
-        else:
-        # Ambil index user
-            idx_user = userid_terdaftar.index(userid_login)
+            # cek id terdaftar/belum    
+            if userid_login not in userid_terdaftar:
+                coba += 1
+                print("ID Tidak Terdaftar. Silakan registrasi.")
+                print(f"Percobaan ke- {coba} dari {batas_coba}")
+            else:
+            # Ambil index user
+                idx_user = userid_terdaftar.index(userid_login)
 
         # cek password
-            coba = 1
-            batas_coba = 5
+                if password_terdaftar[idx_user] == password_login:
+                    print("Anda Berhasil Login")
+                    login_berhasil = True
+     
+                    # Tampilkan Data User
+                    print("===== Data Anda =====")
+                    print("Nama:", nama_terdaftar[idx_user])
+                    print("Email:", email_terdaftar[idx_user])
+                    print("Gender:", gender_terdaftar[idx_user])
+                    print("Usia:", usia_terdaftar[idx_user])
+                    print("Pekerjaan:", pekerjaan_terdaftar[idx_user])
+                    print("Hobi:", ", ".join(hobi_terdaftar[idx_user]))
+                    print("Alamat:")
+                    print("Nama Kota:", kota_terdaftar[idx_user])
+                    print("RT:", rt_terdaftar[idx_user])
+                    print("RW:", rw_terdaftar[idx_user])
+                    print("Zip Code:", zipcode_terdaftar[idx_user])
+                    print("Geo:")
+                    print("Lat:", lat_terdaftar[idx_user])
+                    print("Longitude:", long_terdaftar[idx_user])
+                    print("No Hp:", nohp_terdaftar[idx_user])
+                
+                else:
+                    coba += 1
+                    print("Password yg dimasukkan Salah")
+                    print(f"Percobaan ke- {coba} dari {batas_coba}")
+                    print()
 
-            if coba <= batas_coba:
-                print(f"Password Salah. Percobaan ke-{coba} dari {batas_coba}")
-                password_login = input("Masukkan Password: ")
-                coba += 1
-            elif password_terdaftar[idx_user] != password_login and coba == batas_coba:
-                coba += 1
-                print("Password salah. Kesempatan Habis. Silakan coba beberapa saat lagi.")
-            else:
-                print("Anda Berhasil Login")
-                login_berhasil = "sudah"
-                            
-                # Tampilkan Data User
-                print("===== Data Anda =====")
-                print("Nama:", nama_terdaftar[idx_user])
-                print("Email:", email_terdaftar[idx_user])
-                print("Gender:", gender_terdaftar[idx_user])
-                print("Usia:", usia_terdaftar[idx_user])
-                print("Pekerjaan:", pekerjaan_terdaftar[idx_user])
-                print("Hobi:", ", ".join(hobi_terdaftar[idx_user]))
-                print("Alamat:")
-                print("Nama Kota:", kota_terdaftar[idx_user])
-                print("RT:", rt_terdaftar[idx_user])
-                print("RW:", rw_terdaftar[idx_user])
-                print("Zip Code:", zipcode_terdaftar[idx_user])
-                print("Geo:")
-                print("Lat:", lat_terdaftar[idx_user])
-                print("Longitude:", long_terdaftar[idx_user])
-                print("No Hp:", nohp_terdaftar[idx_user])
+        if not login_berhasil:
+            print("\n" + "=" * 50)
+            print("Gagal Login sebanyak 5 kali. Silakan coba beberapa saat lagi.")
+            print("Kembali ke Menu Utama")
+            print("\n" + "=" * 50)
+            menu_awal()
         
-        if login_berhasil == "belum" and batas_login == 0:
-            print("Kesempatan login habis. Silakan coba beberapa saat lagi.")
-        
-        
-
 
 # ===== EXIT =====
     elif opsi == "3":
