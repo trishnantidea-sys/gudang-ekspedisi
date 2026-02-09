@@ -5,7 +5,7 @@ def validasi_email(Email):
     if Email.count("@") != 1:
         return "Format Email salah (harus memiliki '@')"
     
-    # Split dengan @
+    # pisahkan dengan @
     bagian = Email.split("@")
     User = bagian[0]
     sisa = bagian[1]
@@ -113,16 +113,28 @@ while program_berjalan == "ya":
         while status_userid == "belum valid":
             userid = input("Masukkan User ID: ")
 
-            if userid.isalpha() or userid.isdigit():
-                print("User ID harus kombinasi huruf dan angka")
-            elif not userid.isalnum():
-                print("User ID tidak boleh mengandung karakter lain")
-            elif len(userid) < 6 or len(userid) > 20:
-                print("User ID harus terdiri dari 6-20 karakter")
-            elif userid in userid_terdaftar:
-                print("User ID sudah terdaftar")
+            jumlah_huruf = 0
+            jumlah_angka = 0
+            i = 0
+            while i < len(userid):
+                if userid[i].isalpha():
+                    jumlah_huruf += 1
+                if userid[i].isdigit():
+                    jumlah_angka += 1
+                i += 1
+            if jumlah_huruf > 0 and jumlah_angka > 0:
+                if userid.isalnum():
+                    if len(userid) >= 6 and len(userid) <= 20:
+                        if userid in userid_terdaftar:
+                            print("User ID sudah terdaftar")
+                        else:
+                            userid_valid = "sudah valid"
+                    else:
+                        print("User ID harus terdiri dari 6-20 karakter")
+                else:
+                    print("User ID tidak boleh mengandung karakter lain")
             else:
-                userid_valid = "sudah valid"
+                print("User ID harus kombinasi huruf dan angka")
         
         # Validasi Password           
         status_password = "belum valid"
@@ -345,12 +357,16 @@ while program_berjalan == "ya":
                 long_terdaftar.append(Longitude)
                 nohp_terdaftar.append(NoHp)
 
-                    
                 print("Data berhasil disimpan")
                 status_simpan = "sudah"
                 menu_awal()
 
+            elif SimpanData == "N":
+                print("Data tidak disimpan")
+                simpan_valid = "sudah"
+                menu_awal()
             else:
+                print("Tidak valid. Silakan masukkan 'Y' atau 'N'")
                 print("Data tidak disimpan")
                 status_simpan = "belum"
                 menu_awal()
