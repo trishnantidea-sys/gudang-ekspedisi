@@ -168,56 +168,157 @@ while program_berjalan == "ya":
                 
             if hasil == "Alamat Email yg anda Masukkan Valid":
                 status_email = "sudah valid"
-    
+
 
 
 ## ----- Profile Registration -----
 
-        Nama = input("Masukkan nama Lengkap: ").title()
+        nama_valid = "belum"
+        while nama_valid == "belum":
+            Nama = input("Masukkan nama Lengkap: ").title()
+
+            if Nama.replace(" ", "").isalpha():
+                nama_valid = "sudah"
+            else:
+                print("Nama hanya boleh mengandung huruf")
         
-        while Gender != "Male" and Gender != "Female":
+        gender_valid = "belum"
+        while gender_valid == "belum":
             Gender = input("Jenis Kelamin (Male/Female): ").capitalize()
+
             if Gender == "Male" or Gender == "Female":
                 gender_valid = "sudah"
             else:
                 print("Jenis Kelamin tidak valid. Harap masukkan 'Male' atau 'Female'")
 
+        usia_valid = "belum"
+        while usia_valid == "belum":
+            Usia = input("Masukkan usia Anda: ")
+
+            if Usia.isdigit():
+                Usia = int(Usia)
+                if Usia < 17 or Usia > 80:
+                    print("Usia harus antara 17-80 tahun")
+                else:
+                    usia_valid = "sudah"
+            else:
+                print("Usia harus berupa angka")
+
+        pekerjaan_valid = "belum"
+        while pekerjaan_valid == "belum":
+            Pekerjaan = input("Pekerjaan: ").title()
+
+            if Pekerjaan.replace(" ", "").isalpha():
+                pekerjaan_valid = "sudah"
+            else:
+                print("Pekerjaan hanya boleh mengandung huruf")
+
         
-        Usia = int(input("Masukkan usia Anda: "))
-        while Usia < 17 or Usia > 80:
-            print("Usia tidak sesuai dengan ketentuan.")
-            Usia = int(input("Masukkan usia Anda: "))
-
-        Pekerjaan = input("Pekerjaan: ").isalpha()
-
-        list_hobi = []
-        Hobi = input("Hobi: ").title()
-
-        while len(list_hobi) < 3:
-            print("Isi hobi lebih dari 1")
-            if len(list_hobi) < 3:
-                print("Isi hobi lebih dari 1")
+        hobi_valid = "belum"
+        while hobi_valid == "belum":
+            Hobi = input("Hobi (pisahkan dengan koma jika lebih dari 1): ").title()
             list_hobi = Hobi.split(", ")
-            Hobi = input("Hobi: ").title()
+
+            list_hobi_akhir = []
+            i = 0
+            while i < len(list_hobi):
+                hobi_item = list_hobi[i].strip()
+                if hobi_item != "":
+                    list_hobi_akhir.append(hobi_item)
+                i += 1
+
+            if len(list_hobi_akhir) < 3:
+                print("Isi hobi minimal 3")
+            else:
+                jumlah_hobi_alfabet = 0
+                i = 0
+                while i < len(list_hobi_akhir):
+                    if list_hobi_akhir[i].replace(" ", "").isalpha():
+                        jumlah_hobi_alfabet += 1
+                    i += 1
+
+                if jumlah_hobi_alfabet == len(list_hobi_akhir):
+                    list_hobi = list_hobi_akhir
+                    hobi_valid = "sudah"
+                else:
+                    print("Hobi berisi huruf saja.")
+
 
         print("Alamat: ")
-        NamaKota = input("Nama Kota: ").isalpha()
-        RT = int(input("RT: "))
-        RW = int(input("RW: "))
-        ZipCode = int(input("Zip Code: "))
-        while ZipCode <= 5:
-            print("Zip Code minimal 5 karakter")
-            ZipCode = int(input("ZipCode: "))
 
-        print("Geo Location: ")
-        Lat = float(input("Latitude: "))
-        Longitude = float(input("Longitude: "))
+        kota_valid = "belum"
+        while kota_valid == "belum":
+            NamaKota = input("Nama Kota: ")
+
+            if NamaKota.replace(" ", "").isalpha():
+                kota_valid = "sudah"
+            else:
+                print("Nama Kota hanya boleh huruf saja")
+
+        rt_valid = "belum"
+        while rt_valid == "belum":
+            RT = input("RT: ")
+
+            if RT.isdigit():
+                RT = int(RT)
+                rt_valid = "sudah"
+            else:
+                print("RT berupa angka")
+
+        rw_valid = "belum"
+        while rw_valid == "belum":
+            RW = input("RT: ")
+
+            if RW.isdigit():
+                RW = int(RW)
+                rw_valid = "sudah"
+            else:
+                print("RW berupa angka")
         
-        NoHp = int(input("NoHp: "))
-        while NoHp < 10 or NoHp > 13:
+        zipvode_valid = "belum"
+        while rt_valid == "belum":
+            ZipCode = int(input("Zip Code: "))
+
+            if len(ZipCode) != 5:
+                print("Zip Code minimal 5 digit angka")
+            else:
+                print("Zip Code berupa angka")
+                zipvode_valid = "sudah"
+
+        print("Geo: ")
+        lat_valid = "belum"
+        while lat_valid == "belum":
+            Lat = input("Latitude: ")
+
+            konversi_lat = "ya"
+            if konversi_lat == "ya":
+                try:
+                    Lat = float(Lat)
+                    lat_valid = "sudah"
+                except:
+                    print("Latitude berupa angka desimal")
+        
+        longitude_valid = "belum"
+        while longitude_valid == "belum":
+            Longitude = input("Longitude: ")
+
+            konversi_longitude = "ya"
+            if konversi_longitude == "ya":
+                try:
+                    Longitude = float(Longitude)
+                    longitude_valid = "sudah"
+                except:
+                    print("Longitude berupa angka desimal")
+        
+        
+        nohp_valid = "belum"
+        while nohp_valid == "belum":
             NoHp = int(input("NoHp: "))
-            if NoHp < 10 or NoHp > 13:
-                print("NoHp harus terdiri dari 10-13 karakter")
+
+            if len(NoHp) < 11 or len(NoHp) > 13:
+                print("NoHp harus terdiri dari 11-13 digit angka")
+            else:
+                nohp_valid = "sudah"
 
 
         ## ----- Simpan Data -----
@@ -256,7 +357,7 @@ while program_berjalan == "ya":
 
 # ===== LOGIN =====
     elif opsi == "2":
-        print("----- Login -----")
+        print("\n----- Login -----")
         
         login_berhasil = "belum"
         batas_login = 5
