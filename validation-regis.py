@@ -1,6 +1,3 @@
-
-
-
 # ASSIGNMENT 1 ==== VALIDATION EMAIL ====
 
 def validasi_email(Email):
@@ -129,7 +126,7 @@ while program_berjalan == "ya":
         
         # Validasi Password           
         status_password = "belum valid"
-        while password_valid == "belum":
+        while status_password == "belum valid":
             password = input("Password: ")
 
             if len(password) < 8:
