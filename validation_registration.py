@@ -322,7 +322,7 @@ while program_berjalan == "ya":
         status_simpan = False
 
         while status_simpan == False:
-            SimpanData = input("\nSimpan Data? Y/N): ").upper()
+            SimpanData = input("\nSimpan Data? Y/N: ").upper()
 
             if SimpanData == "Y":
                 userid_terdaftar.append(userid)
@@ -343,12 +343,10 @@ while program_berjalan == "ya":
   
                 print("Data berhasil disimpan")
                 status_simpan = True
-                menu_awal()
 
             elif SimpanData == "N":
                 print("Data tidak disimpan")
                 status_simpan = True
-                menu_awal()
             else:
                 print("Tidak valid. Silakan masukkan 'Y' atau 'N'")
 
