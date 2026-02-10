@@ -404,7 +404,6 @@ while program_berjalan == "ya":
             print("Gagal Login sebanyak 5 kali. Silakan coba beberapa saat lagi.")
             print("Kembali ke Menu Utama")
             print("\n" + "=" * 50)
-            menu_awal()
             
 # ===== EXIT =====
     elif opsi == "3":
