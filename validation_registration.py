@@ -1,24 +1,19 @@
 # ASSIGNMENT 1 ==== VALIDATION EMAIL ====
 
 def validasi_email(Email):
-    # Cek jumlah @
     if Email.count("@") != 1:
         return "Format Email salah (harus memiliki '@')"
     
-    # Split dengan @
     bagian = Email.split("@")
     User = bagian[0]
     sisa = bagian[1]
     
-    # Validasi User tidak kosong
     if User == "":
         return "Format Username tidak boleh kosong"
     
-    # User harus diawali huruf atau angka
     if not User[0].isalnum():
         return "Format Username harus diawali huruf atau angka)"
     
-    # User hanya boleh huruf, angka, underscore, dan dot
     i = 0
     while i < len(User):
         char = User[i]
@@ -26,31 +21,25 @@ def validasi_email(Email):
             return "Format Username mengandung karakter tidak valid"
         i += 1
     
-    # Cek apakah ada ekstensi (minimal 1 dot)
     if sisa.count(".") < 1:
         return "Format Email harus memiliki ekstensi"
     
-    # Cek maksimal 2 dot untuk ekstensi
     if sisa.count(".") > 2:
         return "Format Ekstensi maksimal 2 dot"
     
-    # Split hosting dan ekstensi
     parts = sisa.split(".")
     Hosting = parts[0]
     Ekstensi = parts[1:]
     
-    # Validasi Hosting tidak boleh kosong
     if Hosting == "":
         return "Format Hosting tidak boleh kosong"
     
-    # Hosting hanya boleh huruf dan angka
     i = 0
     while i < len(Hosting):
         if not Hosting[i].isalnum():
             return "Format Hosting hanya boleh huruf dan angka"
         i += 1
     
-    # Validasi setiap ekstensi
     idx = 0
     while idx < len(Ekstensi):
         ext = Ekstensi[idx]
@@ -58,11 +47,9 @@ def validasi_email(Email):
         if ext == "":
             return "Format Ekstensi belum dimasukkan"
         
-        # Ekstensi hanya boleh huruf
         if not ext.isalpha():
             return "Format Ekstensi hanya boleh huruf"
         
-        # Ekstensi maksimal 5 karakter
         if len(ext) > 5:
             return "Format Ekstensi maksimal 5 karakter"
         
@@ -145,7 +132,6 @@ while program_berjalan == "ya":
             if len(password) < 8:
                 print("Password minimal 8 karakter")
             else:
-                # Cek kombinasi
                 jumlah_huruf_besar = 0
                 jumlah_huruf_kecil = 0
                 jumlah_angka = 0
@@ -377,8 +363,7 @@ while program_berjalan == "ya":
         while not login_berhasil and coba < batas_coba:
             userid_login = input("Masukkan ID: ")
             password_login = input("Masukkan Password: ")
-
-            # cek id terdaftar/belum    
+  
             if userid_login not in userid_terdaftar:
                 coba += 1
                 print("ID Tidak Terdaftar. Silakan registrasi.")
@@ -387,12 +372,10 @@ while program_berjalan == "ya":
             # Ambil index user
                 idx_user = userid_terdaftar.index(userid_login)
 
-        # cek password
                 if password_terdaftar[idx_user] == password_login:
                     print("Anda Berhasil Login")
                     login_berhasil = True
      
-                    # Tampilkan Data User
                     print("===== Data Anda =====")
                     print("Nama:", nama_terdaftar[idx_user])
                     print("Email:", email_terdaftar[idx_user])
