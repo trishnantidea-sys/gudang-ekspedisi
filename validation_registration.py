@@ -214,6 +214,8 @@ while program_berjalan == "ya":
         hobi_valid = False
         while hobi_valid == False:
             Hobi = input("Hobi (pisahkan dengan koma jika lebih dari 1): ").title()
+
+            Hobi = Hobi.replace(" ", "")
             list_hobi = Hobi.split(",")
 
             list_hobi_akhir = []
@@ -230,7 +232,7 @@ while program_berjalan == "ya":
                 jumlah_hobi_alfabet = 0
                 i = 0
                 while i < len(list_hobi_akhir):
-                    if list_hobi_akhir[i].replace(" ", "").isalpha():
+                    if list_hobi_akhir[i].isalpha():
                         jumlah_hobi_alfabet += 1
                     i += 1
 
