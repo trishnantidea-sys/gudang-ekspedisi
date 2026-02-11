@@ -214,7 +214,7 @@ while program_berjalan == "ya":
         hobi_valid = False
         while hobi_valid == False:
             Hobi = input("Hobi (pisahkan dengan koma jika lebih dari 1): ").title()
-            list_hobi = Hobi.split(", ")
+            list_hobi = Hobi.split(",")
 
             list_hobi_akhir = []
             i = 0
