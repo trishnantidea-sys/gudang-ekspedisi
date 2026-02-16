@@ -1,4 +1,22 @@
 from validation_registration import registrasi, login
+from database import
+userid_terdaftar = [],
+password_terdaftar = [],
+email_terdaftar = [],
+nama_terdaftar = [],
+gender_terdaftar = [],
+usia_terdaftar = [],
+pekerjaan_terdaftar = [],
+hobi_terdaftar = [],
+kota_terdaftar = [],
+rt_terdaftar = [],
+rw_terdaftar = [],
+zipcode_terdaftar = [],
+lat_terdaftar = [],
+long_terdaftar = [],
+nohp_terdaftar = []
+
+
 
 import os
 os.system("clear")
@@ -115,7 +133,7 @@ def count_data_paket():
     return len(database_paket)
 
 
-### === Menu Utama
+### === Menu Utama ===
 def menu_utama():
     print("\n" + "=" * 50)
     print("Selamat Datang di Aplikasi Gudang Ekspedisi")
