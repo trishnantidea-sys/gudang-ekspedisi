@@ -1,3 +1,5 @@
+from validation_registration import registrasi, login
+
 import os
 os.system("clear")
 
@@ -112,28 +114,69 @@ def hapus_data_paket():
 def count_data_paket():
     return len(database_paket)
 
-while True:
-    print("\n")
-    print("="*50)
-    print("1. Input Data Paket")
-    print(f"2. Lihat Data Paket ({count_data_paket()} data)")
-    print("3. Update Data Paket")
-    print("4. Hapus Data Paket")
-    print("5. Keluar")
-    print("="*50)
 
-    pilihan = input("Masukkan pilihan: ")
+### === Menu Utama
+def menu_utama():
+    print("\n" + "=" * 50)
+    print("Selamat Datang di Aplikasi Gudang Ekspedisi")
+    print("(Dea & Lauzia)")
+    print("=" * 50)
+    print("1. Register")
+    print("2. Login")
+    print("3. Exit")
+    print("=" * 50)
 
-    if pilihan == "1":
-        input_data_paket()
-    elif pilihan == "2":
-        lihat_data_paket()
-    elif pilihan == "3":
-        update_data_paket()
-    elif pilihan == "4":
-        hapus_data_paket()
-    elif pilihan == "5":
-        print("Terima kasih telah menggunakan aplikasi Gudang Ekspedisi")
-        break
+def menu_paket():
+    print("\n" + "=" * 50)
+    while True:
+        print("\n")
+        print("="*50)
+        print("=== MENU MANAJEMEN PAKET ===")
+        print("="*50)
+        print("1. Input Data Paket")
+        print(f"2. Lihat Data Paket ({count_data_paket()} data)")
+        print("3. Update Data Paket")
+        print("4. Hapus Data Paket")
+        print("5. Keluar")
+        print("="*50)
+
+        pilihan = input("Masukkan pilihan: ")
+
+        if pilihan == "1":
+            input_data_paket()
+        elif pilihan == "2":
+            lihat_data_paket()
+        elif pilihan == "3":
+            update_data_paket()
+        elif pilihan == "4":
+            hapus_data_paket()
+        elif pilihan == "5":
+            print("Terima kasih telah menggunakan aplikasi Gudang Ekspedisi")
+            break
+        else:
+            print("Pilihan tidak valid. Silakan masukkan pilihan yang benar.")
+
+## === Program Utama ===
+program_berjalan = True
+
+while program_berjalan:
+    menu_utama()
+    
+    opsi = input("Pilih Menu (1/2/3): ")
+    
+    if opsi == "1":
+        registrasi()
+    
+    elif opsi == "2":
+        idx_user = login()
+        if idx_user is not None:
+            # Jika login berhasil, masuk ke menu paket
+            menu_paket()
+    
+    elif opsi == "3":
+        print("\n----- Exit -----")
+        print("Terima Kasih telah menggunakan Aplikasi Ekspedisi Gudang (Dea & Lauzia)")
+        program_berjalan = False
+    
     else:
-        print("Pilihan tidak valid. Silakan masukkan pilihan yang benar.")
+        print("Opsi tidak valid. Silakan pilih 1, 2, atau 3.")

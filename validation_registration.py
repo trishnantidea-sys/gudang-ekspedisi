@@ -409,12 +409,5 @@ def login():
     
     return idx_user
             
-# # ===== EXIT =====
-#     elif opsi == "3":
-#         print("\n----- Exit -----")
-#         print("Terima Kasih telah menggunakan Aplikasi Ekspedisi Gudang (Dea & Lauzia)")
-#         program_berjalan = "tidak"
-#     else:
-#         print("Opsi tidak valid. Silakan pilih 1, 2, atau 3.")
 
  
