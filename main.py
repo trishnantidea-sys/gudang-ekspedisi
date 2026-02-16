@@ -174,8 +174,8 @@ while program_berjalan:
             menu_paket()
     
     elif opsi == "3":
-        print("\n----- Exit -----")
-        print("Terima Kasih telah menggunakan Aplikasi Ekspedisi Gudang (Dea & Lauzia)")
+        print("\n----- Exit -----".center(50))
+        print("Terima Kasih telah menggunakan Aplikasi Ekspedisi Gudang (Dea & Lauzia)".center(50))
         program_berjalan = False
     
     else:
