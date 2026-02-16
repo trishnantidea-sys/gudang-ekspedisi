@@ -3,7 +3,7 @@
 userid_terdaftar = ["admin123", "dea2026", "lauzia99", "user456"]
 password_terdaftar = ["Admin@123", "Dea#2026", "Lauzia@99", "User@456"]
 email_terdaftar = ["admin@mail.com", "dea@gmail.com", "lauzia@yahoo.com", "user@hotmail.com"]
-nama_terdaftar = ["Admin Utama", "Dea Ananda", "Lauzia Putri", "Budi Santoso"]
+nama_terdaftar = ["Admin Utama", "Dea Trishnanti", "Lauzia Fadhila", "Budi Santoso"]
 gender_terdaftar = ["Male", "Female", "Female", "Male"]
 usia_terdaftar = [30, 25, 23, 28]
 pekerjaan_terdaftar = ["Manager", "Staff Gudang", "Admin", "Kurir"]
