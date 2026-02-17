@@ -4,22 +4,6 @@ os.system("clear")
 import datetime
 from validation_registration import registrasi, login
 from database import *
-userid_terdaftar = [],
-password_terdaftar = [],
-email_terdaftar = [],
-nama_terdaftar = [],
-gender_terdaftar = [],
-usia_terdaftar = [],
-pekerjaan_terdaftar = [],
-hobi_terdaftar = [],
-kota_terdaftar = [],
-rt_terdaftar = [],
-rw_terdaftar = [],
-zipcode_terdaftar = [],
-lat_terdaftar = [],
-long_terdaftar = [],
-nohp_terdaftar = []
-database_paket = []
 
 print("Selamat datang di Aplikasi Gudang Ekspedisi (Dea & Lauzia)")
 print("="*50)
@@ -83,6 +67,21 @@ def hitung_tarif(berat, jenis_pengiriman):
     total_tarif = berat * tarif_per_kg
     return total_tarif
 
+def validasi_resi(resi):
+    if len(resi) != 6:
+        return False, "Resi harus terdiri dari 6 karakter (contoh: EXP001)"
+    if not resi.startwith("EXP"):
+        return False, "Resi harus dimulai dengan 'EXP' (huruf kapital)"
+    angka_bagian = resi[3::]
+
+    i = 0
+    while i < len(angka_bagian):
+        if not angka_bagian[i].isdigit():
+            return False, "3 karakter setelah 'EXP' harus berupa angka (contoh: EXP001)"
+        i += 1
+
+    return True
+
 def pilih_jenis_pengiriman():
     print("\n===== Jenis Pengiriman =====")
     print("1. D&L Reguler (Estimasi 2-5 hari) - Rp 10.000/kg")
@@ -143,7 +142,7 @@ def input_data_paket():
         while tgl_valid == False:
             tgl_pengiriman = input("Masukkan tanggal pengiriman (DD-MM-YYYY): ")
             try:
-                datetime.strptime(tgl_pengiriman, "%d-%m-%Y")
+                datetime.datetime.strptime(tgl_pengiriman, "%d-%m-%Y")
                 tgl_valid = True
             except:
                 print("Format tanggal salah. Gunakan format DD-MM-YYYY")
@@ -220,7 +219,7 @@ def lihat_data_paket():
         if pilihan_kat in kategori_map:
             kategori_pilihan = kategori_map[pilihan_kat]
             print(f"\n=== Paket Kategori: {kategori_pilihan} ===")
-            ada_data == False
+            ada_data = False
             for data in database_paket:
                 if data["kategori"] == kategori_pilihan:
                     tampilkan_detail_paket(data)
@@ -292,7 +291,15 @@ def tampilkan_detail_paket(data):
 
 def update_data_paket():
     print("\n=== Update Data Paket ===")
-    resi = input("Masukkan nomor resi yang ingin diupdate: ")
+
+    resi_valid = False
+    while resi_valid == False:
+        resi = input("Masukkan nomor resi yang ingin diupdate: ").strip()
+        format_ok, pesan = validasi_resi(resi)
+        if not format_ok:
+            print(f"Format resi tidak valid: {pesan}")
+        else:
+            resi_valid = True
 
     for data in database_paket:
         if data["resi"] == resi:
@@ -327,7 +334,7 @@ def update_data_paket():
             while tgl_valid == False:
                 tgl_pengiriman = input("Masukkan tanggal pengiriman (DD-MM-YYYY): ")
                 try:
-                    datetime.strptime(tgl_pengiriman, "%d-%m-%Y")
+                    datetime.datetime.strptime(tgl_pengiriman, "%d-%m-%Y")
                     tgl_valid = True
                 except:
                     print("Format tanggal salah. Gunakan format DD-MM-YYYY")
@@ -340,7 +347,6 @@ def update_data_paket():
             print(f"\nTotal Tarif Baru: Rp {tarif:,.0f}")
             
             # update data
-        
             data["pengirim"] = pengirim
             data["no_hp_pengirim"] = no_hp_pengirim
             data["penerima"] = penerima
@@ -360,7 +366,14 @@ def update_data_paket():
 
 def hapus_data_paket():
     print("\n=== Hapus Data Paket ===")
-    resi = input("Masukkan nomor resi yang ingin dihapus: ")
+    resi_valid = False
+    while resi_valid == False:
+        resi = input("Masukkan nomor resi yang ingin dihapus: ").strip()
+        format_ok, pesan = validasi_resi(resi)
+        if not format_ok:
+            print(f"Format resi tidak valid: {pesan}")
+        else:
+            resi_valid = True
 
     for data in database_paket:
         if data["resi"] == resi:
@@ -391,30 +404,6 @@ def menu_utama():
     print("2. Login")
     print("3. Exit")
     print("=" * 50)
-
-    program_berjalan = True
-
-    while program_berjalan:
-        menu_utama()
-        
-        opsi = input("Pilih Menu (1/2/3): ")
-        
-        if opsi == "1":
-            registrasi()
-        
-        elif opsi == "2":
-            idx_user = login()
-            if idx_user is not None:
-                # Jika login berhasil, masuk ke menu paket
-                menu_paket()
-        
-        elif opsi == "3":
-            print("\n----- Exit -----".center(50))
-            print("Terima Kasih telah menggunakan Aplikasi Ekspedisi Gudang (Dea & Lauzia)".center(50))
-            program_berjalan = False
-        
-        else:
-            print("Opsi tidak valid. Silakan pilih 1, 2, atau 3.")
 
 
 ## === Menu Admin Manajemen Paket ===
@@ -447,3 +436,26 @@ def menu_paket():
             break
         else:
             print("Pilihan tidak valid. Silakan masukkan pilihan yang benar.")
+
+
+program_berjalan = True
+while program_berjalan:
+    menu_utama()
+        
+    opsi = input("Pilih Menu (1/2/3): ")
+        
+    if opsi == "1":
+        registrasi()
+        
+    elif opsi == "2":
+        idx_user = login()
+        if idx_user is not None:
+            menu_paket()  # Jika login berhasil, masuk ke menu paket
+        
+        elif opsi == "3":
+            print("\n----- Exit -----".center(50))
+            print("Terima Kasih".center(50))
+            program_berjalan = False
+        
+        else:
+            print("Opsi tidak valid. Silakan pilih 1, 2, atau 3.")

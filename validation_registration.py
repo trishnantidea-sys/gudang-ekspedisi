@@ -1,19 +1,4 @@
 from database import *
-userid_terdaftar = [],
-password_terdaftar = [],
-email_terdaftar = [],
-nama_terdaftar = [],
-gender_terdaftar = [],
-usia_terdaftar = [],
-pekerjaan_terdaftar = [],
-hobi_terdaftar = [],
-kota_terdaftar = [],
-rt_terdaftar = [],
-rw_terdaftar = [],
-zipcode_terdaftar = [],
-lat_terdaftar = [],
-long_terdaftar = [],
-nohp_terdaftar = []
 
 # ASSIGNMENT 1 ==== VALIDATION EMAIL ====
 
