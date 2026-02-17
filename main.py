@@ -116,7 +116,9 @@ def input_data_paket():
                     break
 
             if duplicate == True:
-                continue
+                break
+
+            resi_valid = True
 
         pengirim = input("Masukkan nama pengirim: ")
         no_hp_pengirim = input("Masukkan no. HP pengirim: ")
