@@ -5,20 +5,11 @@ import datetime
 from validation_registration import registrasi, login
 from database import *
 
-print("Selamat datang di Aplikasi Gudang Ekspedisi (Dea & Lauzia)")
+print("Selamat datang di Aplikasi Gudang Ekspedisi".center(50))
+print("D & L".center(50))
 print("="*50)
 
-# # login
-# username = input("Masukkan email: ")
-# password = input("Masukkan password: ")
 
-# if username == "admin@mail.com" and password == "12345":
-#     print("\n")
-#     print("="*50)
-#     print("Login berhasil")
-# else:
-#     print("Login gagal. Email atau password salah.")
-#     exit()
 
 ### == Fungsi Paket ===
 def pilih_kategori():
@@ -107,16 +98,25 @@ def pilih_jenis_pengiriman():
 def input_data_paket():
     while True:
         print("\n===== Input Data Paket =====")
-        resi = input("Masukkan nomor resi: ")
+        
+        resi_valid = False
+        while resi_valid == False:
+            resi = input("Masukkan nomor resi (format: EXP + 3 angka, contoh: EXP001): ").strip()
 
-        duplicate = False
-        for data in database_paket:
-            if data["resi"] == resi:
-                print("Resi sudah terdaftar. Silakan masukkan resi yang berbeda.")
-                duplicate = True
+            format_ok, pesan = validasi_resi(resi)
+            if not format_ok:
+                print(f"Format resi tidak valid: {pesan}")
+                continue
 
-        if duplicate == True:
-            continue
+            duplicate = False
+            for data in database_paket:
+                if data["resi"] == resi:
+                    print("Resi sudah terdaftar. Silakan masukkan resi yang berbeda.")
+                    duplicate = True
+                    break
+
+            if duplicate == True:
+                continue
 
         pengirim = input("Masukkan nama pengirim: ")
         no_hp_pengirim = input("Masukkan no. HP pengirim: ")
@@ -188,10 +188,7 @@ def lihat_data_paket():
     pilihan = input("Pilih tampilan (1-3): ")
 
     if pilihan == "1":
-        # Tampilkan semua paket
-        print("\n===== Semua Data Paket =====")
-        for data in database_paket:
-            tampilkan_detail_paket(data)
+        tampilkan_tabel_paket(database_paket, "SEMUA DATA PAKET")
     
     elif pilihan == "2":
         # Tampilkan berdasarkan kategori
@@ -218,13 +215,14 @@ def lihat_data_paket():
 
         if pilihan_kat in kategori_map:
             kategori_pilihan = kategori_map[pilihan_kat]
-            print(f"\n=== Paket Kategori: {kategori_pilihan} ===")
-            ada_data = False
+            hasil_filter = []
+    
             for data in database_paket:
                 if data["kategori"] == kategori_pilihan:
-                    tampilkan_detail_paket(data)
-                    ada_data = True
-            if not ada_data:
+                    hasil_filter.append(data)
+            if hasil_filter:
+                tampilkan_tabel_paket(hasil_filter, f"Paket Kategori: {kategori_pilihan.upper()}")
+            else:
                 print(f"Tidak ada paket dengan kategori {kategori_pilihan}")
         else:
             print("Pilihan kategori tidak valid")
@@ -247,15 +245,16 @@ def lihat_data_paket():
         
         if pilihan_jenis in jenis_map:
             jenis_pilihan = jenis_map[pilihan_jenis]
-            print(f"\n===== Paket Jenis Pengiriman: {jenis_pilihan} =====")
-            ada_data = False
+            hasil_filter = []
+
             for data in database_paket:
                 if data["jenis_pengiriman"] == jenis_pilihan:
-                    tampilkan_detail_paket(data)
-                    ada_data = True
-            
-            if not ada_data:
+                    hasil_filter.append(data)
+            if hasil_filter:
+                tampilkan_tabel_paket(hasil_filter, f"Paket Jenis: {jenis_pilihan.upper()}")
+            else:
                 print(f"Tidak ada paket dengan jenis pengiriman {jenis_pilihan}")
+           
         else:
             print("Pilihan jenis pengiriman tidak valid")
     
@@ -274,20 +273,128 @@ def lihat_data_paket():
     # else:
     #     print
 
+def tampilkan_tabel_paket(list_data, judul="DATA PAKET"):
+    if not list_data:
+        print("Tidak ada data untuk ditampilkan")
+        return
+    
+    ## untuk membuat lebar kolom (tetap)
+    w_no    = 4
+    w_resi  = 7
+    w_krm   = 16
+    w_trm   = 16
+    w_kat   = 22
+    w_brt   = 7
+    w_jns   = 20
+    w_tgl   = 12
+    w_est   = 10
+    w_tarif = 14
+
+    def baris_pembatas(isi="-"):
+        cols = ["|"]
+        widths = [w_no, w_resi, w_krm, w_trm, w_kat, w_brt, w_jns, w_tgl, w_est, w_tarif]
+        i = 0
+        while i < len(widths):
+            cols.append(isi * (widths[i] + 2))
+            cols.append("|")
+            i += 1
+        print("".join(cols))
+
+    def sel(teks, lebar, rata="kiri"):
+        teks = str(teks)
+        if len(teks) > lebar:
+            teks = teks[:lebar - 1] + "~"
+        if rata == "kanan":
+            return f" {teks.rjust(lebar)} "
+        elif rata == "tengah":
+            return f" {teks.center(lebar)} "
+        else:
+            return f" {teks.ljust(lebar)} "
+        
+    lebar_total = (w_no + w_resi + w_krm + w_trm + w_kat + w_brt + w_jns + w_tgl + w_est + w_tarif) + (10 * 2) + 11
+
+    print()
+    print("|" + judul.center(lebar_total - 2) + "|")
+    print("=" * lebar_total)
+
+    header = ("|" + sel("No",      w_no,    "tengah") +
+              "|" + sel("Resi",    w_resi,  "tengah") +
+              "|" + sel("Pengirim",w_krm,   "tengah") +
+              "|" + sel("Penerima",w_trm,   "tengah") +
+              "|" + sel("Kategori",w_kat,   "tengah") +
+              "|" + sel("Berat",   w_brt,   "tengah") +
+              "|" + sel("Jenis Pengiriman", w_jns, "tengah") +
+              "|" + sel("Tgl Kirim",w_tgl,  "tengah") +
+              "|" + sel("Estimasi",w_est,   "tengah") +
+              "|" + sel("Tarif (Rp)",w_tarif,"tengah") +
+              "|")
+    print(header)
+    baris_pembatas("=")
+
+    ## untuk baris data
+    no = 1
+    i = 0
+    while i < len(list_data):
+        data = list_data[i]
+        baris = ("|" + sel(no,                         w_no,    "tengah") +
+                 "|" + sel(data["resi"],                w_resi,  "tengah") +
+                 "|" + sel(data["pengirim"],             w_krm,  "kiri")   +
+                 "|" + sel(data["penerima"],             w_trm,  "kiri")   +
+                 "|" + sel(data["kategori"],             w_kat,  "kiri")   +
+                 "|" + sel(f"{data['berat']} kg",        w_brt,  "kanan")  +
+                 "|" + sel(data["jenis_pengiriman"],     w_jns,  "kiri")   +
+                 "|" + sel(data["tanggal_pengiriman"],   w_tgl,  "tengah") +
+                 "|" + sel(data["estimasi"],             w_est,  "tengah") +
+                 "|" + sel(f"{data['tarif']:,.0f}",      w_tarif,"kanan")  +
+                 "|")
+        print(baris)
+        if i < len(list_data) - 1:
+            baris_pembatas("-")
+        no += 1
+        i += 1
+
+    baris_pembatas("=")
+    print(f"  Total: {len(list_data)} paket\n")
+
 def tampilkan_detail_paket(data):
-    print(f"\nResi: {data['resi']}")
-    print(f"Pengirim: {data['pengirim']}")
-    print(f"No. HP Pengirim: {data['no_hp_pengirim']}")
-    print(f"Penerima: {data['penerima']}")
-    print(f"No. HP Penerima: {data['no_hp_penerima']}")
-    print(f"Alamat Tujuan: {data['alamat_tujuan']}")
-    print(f"Kategori: {data['kategori']}")
-    print(f"Berat: {data['berat']} kg")
-    print(f"Tanggal Pengiriman: {data['tanggal_pengiriman']}")
-    print(f"Jenis Pengiriman: {data['jenis_pengiriman']}")
-    print(f"Estimasi Tiba: {data['estimasi']}")
-    print(f"Tarif: Rp {data['tarif']:,.0f}")
-    print("=" * 50)
+    lebar = 52
+    print()
+    print("=" * lebar)
+    print("|" + " DETAIL PAKET ".center(lebar - 2) + "|")
+    print("=" * lebar)
+
+    def baris(label, nilai):
+        label_lebar = 20
+        nilai_lebar = lebar - label_lebar - 5
+        label_str = str(label).ljust(label_lebar)
+        nilai_str = str(nilai)
+        if len(nilai_str) > nilai_lebar:
+            print(f"| {label_str} | {nilai_str[:nilai_lebar]} |")
+            sisa = nilai_str[nilai_lebar:]
+            while sisa:
+                print(f"| {''.ljust(label_lebar)} | {sisa[:nilai_lebar].ljust(nilai_lebar)} |")
+                sisa = sisa[nilai_lebar:]
+        else:
+            print(f"| {label_str} | {nilai_str.ljust(nilai_lebar)} |")
+
+    print("-" * lebar)
+    baris("Nomor Resi",       data["resi"])
+    print("-" * lebar)
+    baris("Pengirim",         data["pengirim"])
+    baris("No. HP Pengirim",  data["no_hp_pengirim"])
+    print("-" * lebar)
+    baris("Penerima",         data["penerima"])
+    baris("No. HP Penerima",  data["no_hp_penerima"])
+    baris("Alamat Tujuan",    data["alamat_tujuan"])
+    print("-" * lebar)
+    baris("Kategori",         data["kategori"])
+    baris("Berat",            f"{data['berat']} kg")
+    baris("Tgl Pengiriman",   data["tanggal_pengiriman"])
+    baris("Jenis Pengiriman", data["jenis_pengiriman"])
+    baris("Estimasi Tiba",    data["estimasi"])
+    baris("Tarif",            f"Rp {data['tarif']:,.0f}")
+    print("=" * lebar)
+
 
 def update_data_paket():
     print("\n=== Update Data Paket ===")
@@ -397,8 +504,7 @@ def count_data_paket():
 ### === Menu Utama ===
 def menu_utama():
     print("\n" + "=" * 50)
-    print("Selamat Datang di Aplikasi Gudang Ekspedisi")
-    print("(Dea & Lauzia)")
+    print("Selamat Datang di Aplikasi Gudang Ekspedisi".center(50))
     print("=" * 50)
     print("1. Register")
     print("2. Login")
@@ -412,7 +518,7 @@ def menu_paket():
     while True:
         print("\n")
         print("="*50)
-        print("=== MENU MANAJEMEN PAKET ===")
+        print("MENU MANAJEMEN PAKET".center(50))
         print("="*50)
         print("1. Input Data Paket")
         print(f"2. Lihat Data Paket ({count_data_paket()} data)")
@@ -452,10 +558,10 @@ while program_berjalan:
         if idx_user is not None:
             menu_paket()  # Jika login berhasil, masuk ke menu paket
         
-        elif opsi == "3":
-            print("\n----- Exit -----".center(50))
-            print("Terima Kasih".center(50))
-            program_berjalan = False
-        
-        else:
-            print("Opsi tidak valid. Silakan pilih 1, 2, atau 3.")
+    elif opsi == "3":
+        print("\n----- Exit -----".center(50))
+        print("Terima Kasih".center(50))
+        program_berjalan = False
+        break
+    else:
+        print("Opsi tidak valid. Silakan pilih 1, 2, atau 3.")

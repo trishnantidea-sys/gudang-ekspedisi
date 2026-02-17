@@ -66,3 +66,14 @@ database_paket = [
     }
 ]
 
+# # login
+# username = input("Masukkan email: ")
+# password = input("Masukkan password: ")
+
+# if username == "admin@mail.com" and password == "12345":
+#     print("\n")
+#     print("="*50)
+#     print("Login berhasil")
+# else:
+#     print("Login gagal. Email atau password salah.")
+#     exit()
