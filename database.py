@@ -21,3 +21,48 @@ lat_terdaftar = [-6.2088, -6.9175, -7.2575, -7.7956]
 long_terdaftar = [106.8456, 107.6191, 112.7521, 110.3695]
 nohp_terdaftar = [81234567890, 85678901234, 87654321098, 89012345678]
 
+database_paket = [
+    {
+        "resi": "EXP001",
+        "pengirim": "Ahmad Wijaya",
+        "no_hp_pengirim": "081234567890",
+        "penerima": "Siti Rahayu",
+        "no_hp_penerima": "085678901234",
+        "alamat_tujuan": "Jl. Merdeka No. 10, Jakarta Pusat",
+        "kategori": "Elektronik",
+        "berat": 2.5,
+        "tanggal_pengiriman": "15-02-2026",
+        "jenis_pengiriman": "D&L Super (Kilat)",
+        "estimasi": "1-2 hari",
+        "tarif": 37500
+    },
+    {
+        "resi": "EXP002",
+        "pengirim": "Budi Santoso",
+        "no_hp_pengirim": "082345678901",
+        "penerima": "Ani Kusuma",
+        "no_hp_penerima": "087654321098",
+        "alamat_tujuan": "Jl. Sudirman No. 25, Bandung",
+        "kategori": "Pakaian/Tekstil",
+        "berat": 1.2,
+        "tanggal_pengiriman": "14-02-2026",
+        "jenis_pengiriman": "D&L Reguler",
+        "estimasi": "2-5 hari",
+        "tarif": 12000
+    },
+    {
+        "resi": "EXP003",
+        "pengirim": "Dewi Lestari",
+        "no_hp_pengirim": "089012345678",
+        "penerima": "Rudi Hartono",
+        "no_hp_penerima": "081234567890",
+        "alamat_tujuan": "Jl. Gatot Subroto No. 50, Surabaya",
+        "kategori": "Dokumen",
+        "berat": 0.5,
+        "tanggal_pengiriman": "16-02-2026",
+        "jenis_pengiriman": "D&L Super (Kilat)",
+        "estimasi": "1-2 hari",
+        "tarif": 7500
+    }
+]
+

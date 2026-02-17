@@ -1,3 +1,20 @@
+from database import *
+userid_terdaftar = [],
+password_terdaftar = [],
+email_terdaftar = [],
+nama_terdaftar = [],
+gender_terdaftar = [],
+usia_terdaftar = [],
+pekerjaan_terdaftar = [],
+hobi_terdaftar = [],
+kota_terdaftar = [],
+rt_terdaftar = [],
+rw_terdaftar = [],
+zipcode_terdaftar = [],
+lat_terdaftar = [],
+long_terdaftar = [],
+nohp_terdaftar = []
+
 # ASSIGNMENT 1 ==== VALIDATION EMAIL ====
 
 def validasi_email(Email):
@@ -55,45 +72,16 @@ def validasi_email(Email):
         
         idx += 1
     
-    return "Alamat Email yg anda Masukkan Valid"
+    return "Alamat Email Valid"
     
 
-
 # ASSIGNMENT 2 ==== ACCOUNT REGISTRATION ====
-
-userid_terdaftar = []
-password_terdaftar = []
-email_terdaftar = []
-nama_terdaftar = []
-gender_terdaftar = []
-usia_terdaftar = []
-pekerjaan_terdaftar = []
-hobi_terdaftar = []
-kota_terdaftar = []
-rt_terdaftar = []
-rw_terdaftar = []
-zipcode_terdaftar = []
-lat_terdaftar = []
-long_terdaftar = []
-nohp_terdaftar = []
-
-def menu_awal():
-    print("\nSelamat Datang di Aplikasi Ekspedisi Gudang (Dea & Lauzia)")
-    print("1. Register")
-    print("2. Login")
-    print("3. Exit")
-
-# Program Utama
-program_berjalan = "ya"
-while program_berjalan == "ya":
-    menu_awal()
-
-    opsi = input("Pilih Menu (1/2/3): ")
-
-# ===== REGISTER Validasi UserID & Password =====
+# REGISTER Validasi UserID & Password 
 def registrasi():
-    print("\n----- Register -----")
-    print("Masukkan Data:")
+    print("\n" + "=" * 50)
+    print("REGISTER ACCOUNT".center(50))
+    print("=" *50)
+    print("Masukkan Data:".center(50))
 
     # Validasi UserID
     status_userid = "belum valid"
@@ -157,7 +145,7 @@ def registrasi():
             else:
                 print("Password harus kombinasi huruf besar, huruf kecil, angka, dan karakter khusus (/.,@#$%)")
     
-        # ----- Validasi Email ----- (yg di Assignment 1 di paling atas)
+    # ----- Validasi Email ----- (yg di Assignment 1 di paling atas)
     status_email = False
     while status_email == False:
         Email = input("Email: ")
@@ -243,7 +231,7 @@ def registrasi():
                 print("Hobi berisi huruf saja.")
 
 
-    print("Alamat: ")
+    print("\nAlamat: ")
     kota_valid = False
     while kota_valid == False:
         NamaKota = input("Nama Kota: ")
@@ -261,7 +249,7 @@ def registrasi():
             RT = int(RT)
             rt_valid = True
         else:
-            print("RT berupa angka")
+            print("RT harus berupa angka")
 
     rw_valid = False
     while rw_valid == False:
@@ -271,7 +259,7 @@ def registrasi():
             RW = int(RW)
             rw_valid = True
         else:
-            print("RW berupa angka")
+            print("RW harus berupa angka")
         
     zipcode_valid = False
     while zipcode_valid == False:
@@ -283,30 +271,27 @@ def registrasi():
             ZipCode = int(ZipCode)
             zipcode_valid = True
 
-    print("Geo: ")
+    print("\nGeo: ")
     lat_valid = False
     while lat_valid == False:
         Lat = input("Latitude: ")
 
-        konversi_lat = "ya"
-        if konversi_lat == "ya":
-            try:
-                Lat = float(Lat)
-                lat_valid = True
-            except:
-                print("Latitude berupa angka desimal")
+    
+        try:
+            Lat = float(Lat)
+            lat_valid = True
+        except:
+            print("Latitude berupa angka desimal")
         
     longitude_valid = False
     while longitude_valid == False:
         Longitude = input("Longitude: ")
 
-        konversi_longitude = "ya"
-        if konversi_longitude == "ya":
-            try:
-                Longitude = float(Longitude)
-                longitude_valid = True
-            except:
-                print("Longitude berupa angka desimal")
+        try:
+            Longitude = float(Longitude)
+            longitude_valid = True
+        except:
+            print("Longitude berupa angka desimal")
         
         
     nohp_valid = False
@@ -320,9 +305,8 @@ def registrasi():
             nohp_valid = True
 
 
-        ## ----- Simpan Data -----
+    ### ----- Simpan Data -----
     status_simpan = False
-
     while status_simpan == False:
         SimpanData = input("\nSimpan Data? Y/N: ").upper()
 
@@ -354,7 +338,10 @@ def registrasi():
 
 # ===== LOGIN =====
 def login():
-    print("\n----- Login -----")
+    print("\n" + "=" * 50)
+    print("LOGIN".center(50))
+    print("=" *50)
+
     
     login_berhasil = False
     coba = 0
@@ -374,7 +361,7 @@ def login():
             idx_user = userid_terdaftar.index(userid_login)
 
             if password_terdaftar[idx_user] == password_login:
-                print("Anda Berhasil Login")
+                print("Login berhasil.")
                 login_berhasil = True
  
                 print("\n===== Data Anda =====")
@@ -402,8 +389,8 @@ def login():
 
     if not login_berhasil:
         print("\n" + "=" * 50)
-        print("Gagal Login sebanyak 5 kali. Silakan coba beberapa saat lagi.")
-        print("Kembali ke Menu Utama")
+        print("Gagal Login sebanyak 5 kali. Silakan coba beberapa saat lagi.".center(50))
+        print("Kembali ke Menu Utama".center(50))
         print("=" * 50)
         return None
     
