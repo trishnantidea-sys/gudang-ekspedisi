@@ -5,9 +5,9 @@ import datetime
 from validation_registration import registrasi, login
 from database import *
 
-print("Selamat datang di Aplikasi Gudang Ekspedisi".center(50))
-print("D & L".center(50))
-print("="*50)
+# print("Selamat datang di Aplikasi Gudang Ekspedisi".center(50))
+# print("D & L".center(50))
+# print("="*50)
 
 
 
