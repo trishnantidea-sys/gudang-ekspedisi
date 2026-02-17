@@ -63,15 +63,15 @@ def validasi_resi(resi):
         return False, "Resi harus terdiri dari 6 karakter (contoh: EXP001)"
     if not resi.startswith("EXP"):
         return False, "Resi harus dimulai dengan 'EXP' (huruf kapital)"
+    
     angka_bagian = resi[3::]
-
     i = 0
     while i < len(angka_bagian):
         if not angka_bagian[i].isdigit():
             return False, "3 karakter setelah 'EXP' harus berupa angka (contoh: EXP001)"
         i += 1
 
-    return True
+    return True, "Resi Valid"
 
 def pilih_jenis_pengiriman():
     print("\n===== Jenis Pengiriman =====")
