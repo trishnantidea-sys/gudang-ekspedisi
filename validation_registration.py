@@ -57,7 +57,7 @@ def validasi_email(Email):
         
         idx += 1
     
-    return "Alamat Email Valid"
+    return "Alamat Email yg anda Masukkan Valid"
     
 
 # ASSIGNMENT 2 ==== ACCOUNT REGISTRATION ====
