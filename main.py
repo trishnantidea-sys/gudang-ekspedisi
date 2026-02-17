@@ -61,7 +61,7 @@ def hitung_tarif(berat, jenis_pengiriman):
 def validasi_resi(resi):
     if len(resi) != 6:
         return False, "Resi harus terdiri dari 6 karakter (contoh: EXP001)"
-    if not resi.startwith("EXP"):
+    if not resi.startswith("EXP"):
         return False, "Resi harus dimulai dengan 'EXP' (huruf kapital)"
     angka_bagian = resi[3::]
 
@@ -223,7 +223,7 @@ def lihat_data_paket():
             if hasil_filter:
                 tampilkan_tabel_paket(hasil_filter, f"Paket Kategori: {kategori_pilihan.upper()}")
             else:
-                print(f"Tidak ada paket dengan kategori {kategori_pilihan}")
+                print(f"\nTidak ada paket dengan kategori {kategori_pilihan}")
         else:
             print("Pilihan kategori tidak valid")
 
@@ -505,6 +505,7 @@ def count_data_paket():
 def menu_utama():
     print("\n" + "=" * 50)
     print("Selamat Datang di Aplikasi Gudang Ekspedisi".center(50))
+    print("D & L".center(50))
     print("=" * 50)
     print("1. Register")
     print("2. Login")
@@ -538,7 +539,7 @@ def menu_paket():
         elif pilihan == "4":
             hapus_data_paket()
         elif pilihan == "5":
-            print("Terima kasih telah menggunakan aplikasi Gudang Ekspedisi")
+            print("\nTerima kasih telah menggunakan aplikasi Gudang Ekspedisi")
             break
         else:
             print("Pilihan tidak valid. Silakan masukkan pilihan yang benar.")
@@ -559,7 +560,7 @@ while program_berjalan:
             menu_paket()  # Jika login berhasil, masuk ke menu paket
         
     elif opsi == "3":
-        print("\n----- Exit -----".center(50))
+        print("\n" + "Exit".center(50))
         print("Terima Kasih".center(50))
         program_berjalan = False
         break
