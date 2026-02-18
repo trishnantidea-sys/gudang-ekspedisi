@@ -259,7 +259,7 @@ def registrasi():
     print("\nGeo: ")
     lat_valid = False
     while lat_valid == False:
-        Lat = input("Latitude: ")
+        Lat = input("Latitude (contoh: -6.9175): ")
 
     
         try:
@@ -270,7 +270,7 @@ def registrasi():
         
     longitude_valid = False
     while longitude_valid == False:
-        Longitude = input("Longitude: ")
+        Longitude = input("Longitude (contoh: 106.8456): ")
 
         try:
             Longitude = float(Longitude)
