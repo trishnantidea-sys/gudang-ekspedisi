@@ -565,6 +565,5 @@ while program_berjalan:
         print("\n" + "Exit".center(50))
         print("Terima Kasih".center(50))
         program_berjalan = False
-        break
     else:
         print("Opsi tidak valid. Silakan pilih 1, 2, atau 3.")
