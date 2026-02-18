@@ -489,7 +489,7 @@ def hapus_data_paket():
             print("\n--- Data yang akan dihapus ---")
             tampilkan_detail_paket(data)
 
-            konfirmasi = input("Yakin inin menghapus data ini? (y/n): ")
+            konfirmasi = input("Yakin ingin menghapus data ini? (y/n): ")
             if konfirmasi.lower() == "y":
                 database_paket.remove(data)
                 print(f"Data paket dengan resi {resi} berhasil dihapus")
