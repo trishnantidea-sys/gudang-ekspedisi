@@ -9,7 +9,7 @@ from database import *
 # print("D & L".center(50))
 # print("="*50)
 
-
+lebar = 52
 
 ### == Fungsi Paket ===
 def pilih_kategori():
@@ -116,7 +116,7 @@ def input_data_paket():
                     break
 
             if duplicate == True:
-                break
+                continue
 
             resi_valid = True
 
@@ -358,45 +358,43 @@ def tampilkan_tabel_paket(list_data, judul="DATA PAKET"):
     baris_pembatas("=")
     print(f"  Total: {len(list_data)} paket\n")
 
+def baris(label, nilai):
+    label_lebar = 20
+    nilai_lebar = lebar - label_lebar - 5
+    label_str = str(label).ljust(label_lebar)
+    nilai_str = str(nilai)
+    if len(nilai_str) > nilai_lebar:
+        print(f"| {label_str} | {nilai_str[:nilai_lebar]} |")
+        sisa = nilai_str[nilai_lebar:]
+        while sisa:
+            print(f"| {''.ljust(label_lebar)} | {sisa[:nilai_lebar].ljust(nilai_lebar)} |")
+            sisa = sisa[nilai_lebar:]
+    else:
+        print(f"| {label_str} | {nilai_str.ljust(nilai_lebar)} |")
+
 def tampilkan_detail_paket(data):
-    lebar = 52
     print()
     print("=" * lebar)
     print("|" + " DETAIL PAKET ".center(lebar - 2) + "|")
     print("=" * lebar)
 
-    def baris(label, nilai):
-        label_lebar = 20
-        nilai_lebar = lebar - label_lebar - 5
-        label_str = str(label).ljust(label_lebar)
-        nilai_str = str(nilai)
-        if len(nilai_str) > nilai_lebar:
-            print(f"| {label_str} | {nilai_str[:nilai_lebar]} |")
-            sisa = nilai_str[nilai_lebar:]
-            while sisa:
-                print(f"| {''.ljust(label_lebar)} | {sisa[:nilai_lebar].ljust(nilai_lebar)} |")
-                sisa = sisa[nilai_lebar:]
-        else:
-            print(f"| {label_str} | {nilai_str.ljust(nilai_lebar)} |")
-
     print("-" * lebar)
     baris("Nomor Resi",       data["resi"])
     print("-" * lebar)
-    baris("Pengirim",         data["pengirim"])
-    baris("No. HP Pengirim",  data["no_hp_pengirim"])
+    baris("[1] Pengirim",         data["pengirim"])
+    baris("[2] No. HP Pengirim",  data["no_hp_pengirim"])
     print("-" * lebar)
-    baris("Penerima",         data["penerima"])
-    baris("No. HP Penerima",  data["no_hp_penerima"])
-    baris("Alamat Tujuan",    data["alamat_tujuan"])
+    baris("[3] Penerima",         data["penerima"])
+    baris("[4] No. HP Penerima",  data["no_hp_penerima"])
+    baris("[5] Alamat Tujuan",    data["alamat_tujuan"])
     print("-" * lebar)
-    baris("Kategori",         data["kategori"])
-    baris("Berat",            f"{data['berat']} kg")
-    baris("Tgl Pengiriman",   data["tanggal_pengiriman"])
-    baris("Jenis Pengiriman", data["jenis_pengiriman"])
+    baris("[6] Kategori",         data["kategori"])
+    baris("[7] Berat",            f"{data['berat']} kg")
+    baris("[8] Tgl Pengiriman",   data["tanggal_pengiriman"])
+    baris("[9] Jenis Pengiriman", data["jenis_pengiriman"])
     baris("Estimasi Tiba",    data["estimasi"])
     baris("Tarif",            f"Rp {data['tarif']:,.0f}")
     print("=" * lebar)
-
 
 def update_data_paket():
     print("\n=== Update Data Paket ===")
@@ -412,49 +410,87 @@ def update_data_paket():
 
     for data in database_paket:
         if data["resi"] == resi:
-            print("\n--- Data Saat Ini ---")
-            tampilkan_detail_paket(data)
+            pengirim = data['pengirim']
+            no_hp_pengirim = data['no_hp_pengirim']
+            penerima = data['penerima']
+            no_hp_penerima = data['no_hp_penerima']
+            alamat_tujuan = data['alamat_tujuan']
+            kategori = data['kategori']
+            berat = data['berat']
+            tanggal_pengiriman = data['tanggal_pengiriman']
+            jenis_pengiriman = data['jenis_pengiriman']
+            estimasi = data['estimasi']
+            tarif = data['tarif']
 
-            print("\n--- Masukkan Data Baru ---")
-            pengirim = input("Masukkan nama pengirim: ")
-            no_hp_pengirim = input("Masukkan no. HP pengirim: ")
-            penerima = input("Masukkan nama penerima: ")
-            no_hp_penerima = input("Masukkan no. HP penerima: ")
-            alamat_tujuan = input("Masukkan alamat tujuan: ")
+            input_done = False
+            while input_done == False:
+                print("\n--- Data Saat Ini ---")
+                tampilkan_detail_paket(data)
 
-            ## update kategori
-            kategori = pilih_kategori()
+                print("\n--- Pilih data yang ingin di ubah. ---")
+                print("--- Jika ada lebih dari satu pilihan, pisahkan dengan tanda koma (,) ---")
+                choice = input("Masukkan pilihan [1-10]: ")
 
-            ## update berat
-            berat_valid = False
-            while berat_valid == False:
-                berat = input("Masukkan berat paket (kg): ")
-                try:
-                    berat = float(berat)
-                    if berat <= 0:
-                        print("Berat harus lebih dari 0 kg")
-                    else:
-                        berat_valid = True
-                except:
-                    print("Berat harus berupa angka")
+                choice_str = choice.replace(" ","").split(",")
+                choice_valid = True
+                for cs in choice_str:
+                    if int(cs) > 10 or int(cs) < 1:
+                        choice_valid = False
+                        os.system("clear")
+                        print("Pilihan tidak tersedia. Coba lagi.")
+                        break
 
-            # Update tanggal
-            tgl_valid = False
-            while tgl_valid == False:
-                tgl_pengiriman = input("Masukkan tanggal pengiriman (DD-MM-YYYY): ")
-                try:
-                    datetime.datetime.strptime(tgl_pengiriman, "%d-%m-%Y")
-                    tgl_valid = True
-                except:
-                    print("Format tanggal salah. Gunakan format DD-MM-YYYY")
-            
-            # Update jenis pengiriman
-            jenis_pengiriman, estimasi = pilih_jenis_pengiriman()
-            
-            # Hitung ulang tarif
-            tarif = hitung_tarif(berat, jenis_pengiriman)
-            print(f"\nTotal Tarif Baru: Rp {tarif:,.0f}")
-            
+                if choice_valid == False:
+                    continue
+
+                print("\n--- Masukkan Data Baru ---")
+                for cs in choice_str:
+                    if int(cs) == 1:
+                        pengirim = input("Masukkan nama pengirim: ")
+                    elif int(cs) == 2:
+                        no_hp_pengirim = input("Masukkan no. HP pengirim: ")
+                    elif int(cs) == 3:
+                        penerima = input("Masukkan nama penerima: ")
+                    elif int(cs) == 4:
+                        no_hp_penerima = input("Masukkan no. HP penerima: ")
+                    elif int(cs) == 5:
+                        alamat_tujuan = input("Masukkan alamat tujuan: ")
+                    elif int(cs) == 6:
+                        ## update kategori
+                        kategori = pilih_kategori()
+                    elif int(cs) == 7:
+                        ## update berat
+                        berat_valid = False
+                        while berat_valid == False:
+                            berat = input("Masukkan berat paket (kg): ")
+                            try:
+                                berat = float(berat)
+                                if berat <= 0:
+                                    print("Berat harus lebih dari 0 kg")
+                                else:
+                                    berat_valid = True
+                            except:
+                                print("Berat harus berupa angka")
+                    elif int(cs) == 8:
+                        # Update tanggal
+                        tgl_valid = False
+                        while tgl_valid == False:
+                            tanggal_pengiriman = input("Masukkan tanggal pengiriman (DD-MM-YYYY): ")
+                            try:
+                                datetime.datetime.strptime(tgl_pengiriman, "%d-%m-%Y")
+                                tgl_valid = True
+                            except:
+                                print("Format tanggal salah. Gunakan format DD-MM-YYYY")
+                    elif int(cs) == 9:
+                        # Update jenis pengiriman
+                        jenis_pengiriman, estimasi = pilih_jenis_pengiriman()
+                    
+                        # Hitung ulang tarif
+                        tarif = hitung_tarif(berat, jenis_pengiriman)
+                        print(f"\nTotal Tarif Baru: Rp {tarif:,.0f}")
+
+                input_done = True
+
             # update data
             data["pengirim"] = pengirim
             data["no_hp_pengirim"] = no_hp_pengirim
@@ -463,12 +499,30 @@ def update_data_paket():
             data["alamat_tujuan"] = alamat_tujuan
             data["kategori"] = kategori
             data["berat"] = berat
-            data["tanggal_pengiriman"] = tgl_pengiriman
+            data["tanggal_pengiriman"] = tanggal_pengiriman
             data["jenis_pengiriman"] = jenis_pengiriman
             data["estimasi"] = estimasi
             data["tarif"] = tarif
 
             print(f"\nData paket dengan resi {resi} berhasil diupdate")
+            print("Data telah diperbarui :")
+            print("-" * lebar)
+            baris("Nomor Resi",       data["resi"])
+            print("-" * lebar)
+            baris("[1] Pengirim",         data["pengirim"])
+            baris("[2] No. HP Pengirim",  data["no_hp_pengirim"])
+            print("-" * lebar)
+            baris("[3] Penerima",         data["penerima"])
+            baris("[4] No. HP Penerima",  data["no_hp_penerima"])
+            baris("[5] Alamat Tujuan",    data["alamat_tujuan"])
+            print("-" * lebar)
+            baris("[6] Kategori",         data["kategori"])
+            baris("[7] Berat",            f"{data['berat']} kg")
+            baris("[8] Tgl Pengiriman",   data["tanggal_pengiriman"])
+            baris("[9] Jenis Pengiriman", data["jenis_pengiriman"])
+            baris("Estimasi Tiba",    data["estimasi"])
+            baris("Tarif",            f"Rp {data['tarif']:,.0f}")
+            print("=" * lebar)
             break
     else:
         print(f"Data paket dengan resi {resi} tidak ditemukan")

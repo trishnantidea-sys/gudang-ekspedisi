@@ -1,4 +1,5 @@
 from database import *
+import pwinput
 
 # ASSIGNMENT 1 ==== VALIDATION EMAIL ====
 
@@ -100,7 +101,8 @@ def registrasi():
     # Validasi Password           
     status_password = False
     while status_password == False:
-        password = input("Password: ")
+        # password = input("Password: ")
+        password = pwinput.pwinput(prompt='Password: ', mask='*')
 
         if len(password) < 8:
             print("Password minimal 8 karakter")
@@ -335,7 +337,8 @@ def login():
 
     while not login_berhasil and coba < batas_coba:
         userid_login = input("Masukkan ID: ")
-        password_login = input("Masukkan Password: ")
+        # password_login = input("Masukkan Password: ")
+        password_login = pwinput.pwinput(prompt='Masukkan Password: ', mask='*')
 
         if userid_login not in userid_terdaftar:
             coba += 1
