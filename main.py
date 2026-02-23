@@ -573,43 +573,34 @@ def hapus_data_paket():
     print("\n=== Hapus Data Paket ===")
 
     while True:
-        resi_valid = False
-        while resi_valid == False:
-            resi = input("Masukkan nomor resi yang ingin dihapus: ").strip()
-            format_ok, pesan = validasi_resi(resi)
-            if not format_ok:
-                print(f"Format resi tidak valid: {pesan}")
-            else:
-                resi_valid = True
-                break
+        resi = input("Masukkan nomor resi yang ingin dihapus: ").strip()
+        format_ok, pesan = validasi_resi(resi)
+        if not format_ok:
+            print(f"Format resi tidak valid: {pesan}")
+        else:
+            break
 
+             
         for data in database_paket:
             if data["resi"] == resi:
                 print("\n--- Data yang akan dihapus ---")
                 tampilkan_detail_paket(data)
-
-                konfirmasi = input("\nYakin ingin menghapus data ini? (y/n): ").strip().lower()
-                if konfirmasi == "y":
-                    database_paket.remove(data)
-                    print(f"Data paket dengan resi '{resi}' berhasil dihapus")
-                else:
-                    print("Penghapusan dibatalkan")
                 break
             else:
                 print(f"Data paket dengan resi '{resi}' tidak ditemukan")
-                
-        # while True:
-        #     konfirmasi = input("\nYakin ingin menghapus data ini? (y/n): ").strip().lower()
-        #     if konfirmasi == "y":
-        #         database_paket.remove(data)
-        #         print(f"\nData paket dengan resi '{resi}' berhasil dihapus!")
-        #         return
-        #     elif konfirmasi == "n":
-        #         print("Penghapusan dibatalkan.")
-        #         return
-        #     else:
-        #         print("Input tidak valid. Masukkan 'y/n'.")
-            
+                return
+     
+        while True:
+            konfirmasi = input("\nYakin ingin menghapus data ini? (y/n): ").strip().lower()
+            if konfirmasi == "y":
+                database_paket.remove(data)
+                print(f"Data paket dengan resi '{resi}' berhasil dihapus")
+                return
+            elif konfirmasi == "n":
+                print("Penghapusan dibatalkan")
+                return
+            else:
+                print("Input tidak valid. Masukkan 'y/n'.")   
 
 def count_data_paket():
     return len(database_paket)
