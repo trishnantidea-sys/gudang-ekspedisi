@@ -5,10 +5,6 @@ import datetime
 from validation_registration import registrasi, login
 from database import *
 
-# print("Selamat datang di Aplikasi Gudang Ekspedisi".center(50))
-# print("D & L".center(50))
-# print("="*50)
-
 lebar = 52
 
 ### == Fungsi Paket ===
@@ -174,38 +170,21 @@ def input_data_paket():
         database_paket.append(data_paket)
         print(f"\nData paket dengan resi {resi} berhasil diinput")
 
-        lanjut = input("Tambahkan data lagi (y/n)? ")
-        if lanjut.lower() != 'y':
-            break
+        while True:
+            lanjut = input("Tambahkan data lagi (y/n)? ").strip().lower()
+            if lanjut.lower() == 'y':
+                break
+            elif lanjut == 'n':
+                return
+            else:
+                print("Pilihan tidak valid. Silakan pilih y/n.")
 
 def lihat_data_paket():
     if not database_paket:
         print("Belum ada data paket yang diinput")
         return
-    print("\n===== Pilihan Tampilan =====")
-    print("1. Lihat Semua Paket")
-    print("2. Lihat Berdasarkan Kategori")
-    print("3. Lihat Berdasarkan Jenis Pengiriman")
-
-    pilihan = input("Pilih tampilan (1-3): ")
-
-    if pilihan == "1":
-        tampilkan_tabel_paket(database_paket, "SEMUA DATA PAKET")
     
-    elif pilihan == "2":
-        # Tampilkan berdasarkan kategori
-        print("\n===== Pilih Kategori =====")
-        print("1. Alat Olahraga")
-        print("2. Kebutuhan Rumah Tangga")
-        print("3. ATK (Alat Tulis Kantor)")
-        print("4. Dokumen")
-        print("5. Elektronik")
-        print("6. Pakaian/Tekstil")
-        print("7. Sparepart")
-        
-        pilihan_kat = input("Pilih kategori (1-7): ")
-        
-        kategori_map = {
+    kategori_map = {
             "1": "Alat Olahraga",
             "2": "Kebutuhan Rumah Tangga",
             "3": "ATK (Alat Tulis Kantor)",
@@ -215,65 +194,118 @@ def lihat_data_paket():
             "7": "Sparepart"
         }
 
-        if pilihan_kat in kategori_map:
-            kategori_pilihan = kategori_map[pilihan_kat]
-            hasil_filter = []
-    
-            for data in database_paket:
-                if data["kategori"] == kategori_pilihan:
-                    hasil_filter.append(data)
-            if hasil_filter:
-                tampilkan_tabel_paket(hasil_filter, f"Paket Kategori: {kategori_pilihan.upper()}")
-            else:
-                print(f"\nTidak ada paket dengan kategori {kategori_pilihan}")
-        else:
-            print("Pilihan kategori tidak valid")
-
-    elif pilihan == "3":
-        print("\n===== Pilih Jenis Pengiriman =====")
-        print("1. D&L Reguler")
-        print("2. D&L Eco (Ekonomis)")
-        print("3. D&L Super (Kilat)")
-        print("4. D&L Cargo")
-        
-        pilihan_jenis = input("Pilih jenis pengiriman (1-4): ")
-        
-        jenis_map = {
+    jenis_map = {
             "1": "D&L Reguler",
             "2": "D&L Eco (Ekonomis)",
             "3": "D&L Super (Kilat)",
             "4": "D&L Cargo"
         }
-        
-        if pilihan_jenis in jenis_map:
-            jenis_pilihan = jenis_map[pilihan_jenis]
-            hasil_filter = []
-
-            for data in database_paket:
-                if data["jenis_pengiriman"] == jenis_pilihan:
-                    hasil_filter.append(data)
-            if hasil_filter:
-                tampilkan_tabel_paket(hasil_filter, f"Paket Jenis: {jenis_pilihan.upper()}")
-            else:
-                print(f"Tidak ada paket dengan jenis pengiriman {jenis_pilihan}")
-           
-        else:
-            print("Pilihan jenis pengiriman tidak valid")
     
-    else:
-        print("Pilihan tidak valid")
+    while True:
+        print("\n===== Pilihan Tampilan =====")
+        print("1. Lihat Semua Paket")
+        print("2. Lihat Berdasarkan Kategori")
+        print("3. Lihat Berdasarkan Jenis Pengiriman")
+
+        pilihan = input("Pilih tampilan (1-3): ")
+
+        if pilihan == "1":
+            tampilkan_tabel_paket(database_paket, "SEMUA DATA PAKET")
+    
+        elif pilihan == "2":
+            # Tampilkan berdasarkan kategori
+            print("\n===== Pilih Kategori =====")
+            print("1. Alat Olahraga")
+            print("2. Kebutuhan Rumah Tangga")
+            print("3. ATK (Alat Tulis Kantor)")
+            print("4. Dokumen")
+            print("5. Elektronik")
+            print("6. Pakaian/Tekstil")
+            print("7. Sparepart")
+            print("8. Kembali")
+            
+            pilihan_kat = input("Pilih kategori (1-8): ")
+
+            while True:
+                pilihan_kat = input("Pilih kategori (1-8): ")
+            
+                if pilihan_kat == "8":
+                    break
+                elif pilihan_kat in kategori_map:
+                    kategori_pilihan = kategori_map[pilihan_kat]
+                    hasil_filter = []
+            
+                    for data in database_paket:
+                        if data["kategori"] == kategori_pilihan:
+                            hasil_filter.append(data)
+                    if hasil_filter:
+                        tampilkan_tabel_paket(hasil_filter, f"Paket Kategori: {kategori_pilihan.upper()}")
+                        break
+                    else:
+                        print(f"\nTidak ada paket dengan kategori '{kategori_pilihan}'")
+                        print("\n1. Cari ulang")
+                        print("2. Kembali >> Menu Manajemen Paket")
+
+                        opsi = input("Pilih menu (1-2): ").strip()
+                        
+                        if opsi == "1":
+                            continue
+                        else:
+                            return
+                else:
+                    print("Pilihan kategori tidak valid")
         
-    # if database_paket:
-    #     for data in database_paket:
-    #         print(f"Resi: {data['resi']}")
-    #         print(f"Pengirim: {data['pengirim']}")
-    #         print(f"No. HP Pengirim: {data['no_hp_pengirim']}")
-    #         print(f"Penerima: {data['penerima']}")
-    #         print(f"No. HP Penerima: {data['no_hp_penerima']}")
-    #         print(f"Alamat Tujuan: {data['alamat_tujuan']}")
-    #         print("="*50)
-    # else:
-    #     print
+    
+        elif pilihan == "3":
+            print("\n===== Pilih Jenis Pengiriman =====")
+            print("1. D&L Reguler")
+            print("2. D&L Eco (Ekonomis)")
+            print("3. D&L Super (Kilat)")
+            print("4. D&L Cargo")
+            print("5. Kembali")
+
+            while True:
+                pilihan_jenis = input("Pilih jenis pengiriman (1-5): ")
+
+                if pilihan_jenis == "5":
+                    break
+                elif pilihan_jenis in jenis_map:
+                    jenis_pilihan = jenis_map[pilihan_jenis]
+                    hasil_filter = []
+
+                    for data in database_paket:
+                        if data["jenis_pengiriman"] == jenis_pilihan:
+                            hasil_filter.append(data)
+                    if hasil_filter:
+                        tampilkan_tabel_paket(hasil_filter, f"Paket Jenis: {jenis_pilihan.upper()}")
+                    else:
+                        print(f"Tidak ada paket dengan jenis pengiriman '{jenis_pilihan}'")
+                        print("\n1. Cari ulang")
+                        print("2. Kembali >> Menu Manajemen Paket")
+
+                        opsi = input("Pilih menu (1-2): ").strip()
+                        
+                        if opsi == "1":
+                            continue
+                        else:
+                            return
+                else:
+                    print("\nPilihan jenis pengiriman tidak valid")
+    
+        else:
+            print("Pilihan tidak valid. Silakan pilih 1-3.")
+            continue
+
+        while True:
+            lanjut = input("\nIngin melihat data paket lagi? (y/n): ").strip().lower()
+            if lanjut == 'y':
+                break
+            elif lanjut == 'n':
+                print("Kembali ke Menu Manajemen Paket.")
+                return
+            else:
+                print("Pilihan tidak valid. Silakan pilih y/n.")
+        
 
 def tampilkan_tabel_paket(list_data, judul="DATA PAKET"):
     if not list_data:
@@ -429,7 +461,7 @@ def update_data_paket():
 
                 print("\n--- Pilih data yang ingin di ubah. ---")
                 print("--- Jika ada lebih dari satu pilihan, pisahkan dengan tanda koma (,) ---")
-                choice = input("Masukkan pilihan [1-10]: ")
+                choice = input("Masukkan pilihan [1-10]: ").strip()
 
                 choice_str = choice.replace(" ","").split(",")
                 choice_valid = True
@@ -477,7 +509,7 @@ def update_data_paket():
                         while tgl_valid == False:
                             tanggal_pengiriman = input("Masukkan tanggal pengiriman (DD-MM-YYYY): ")
                             try:
-                                datetime.datetime.strptime(tgl_pengiriman, "%d-%m-%Y")
+                                datetime.datetime.strptime(tanggal_pengiriman, "%d-%m-%Y")
                                 tgl_valid = True
                             except:
                                 print("Format tanggal salah. Gunakan format DD-MM-YYYY")
@@ -525,33 +557,59 @@ def update_data_paket():
             print("=" * lebar)
             break
     else:
-        print(f"Data paket dengan resi {resi} tidak ditemukan")
+        print(f"Data paket dengan resi '{resi}' tidak ditemukan")
+
+    while True:
+        lanjut = input("\nIngin edit data paket lagi? (y/n): ").strip().lower()
+        if lanjut == 'y':
+            break
+        elif lanjut == 'n':
+            print("Kembali ke Menu Manajemen Paket.")
+            return
+        else:
+            print("Pilihan tidak valid. Silakan pilih y/n.")
 
 def hapus_data_paket():
     print("\n=== Hapus Data Paket ===")
-    resi_valid = False
-    while resi_valid == False:
-        resi = input("Masukkan nomor resi yang ingin dihapus: ").strip()
-        format_ok, pesan = validasi_resi(resi)
-        if not format_ok:
-            print(f"Format resi tidak valid: {pesan}")
-        else:
-            resi_valid = True
 
-    for data in database_paket:
-        if data["resi"] == resi:
-            print("\n--- Data yang akan dihapus ---")
-            tampilkan_detail_paket(data)
-
-            konfirmasi = input("Yakin ingin menghapus data ini? (y/n): ")
-            if konfirmasi.lower() == "y":
-                database_paket.remove(data)
-                print(f"Data paket dengan resi {resi} berhasil dihapus")
+    while True:
+        resi_valid = False
+        while resi_valid == False:
+            resi = input("Masukkan nomor resi yang ingin dihapus: ").strip()
+            format_ok, pesan = validasi_resi(resi)
+            if not format_ok:
+                print(f"Format resi tidak valid: {pesan}")
             else:
-                print("Penghapusan dibatalkan")
-            break
-    else:
-        print(f"Data paket dengan resi {resi} tidak ditemukan")
+                resi_valid = True
+                break
+
+        for data in database_paket:
+            if data["resi"] == resi:
+                print("\n--- Data yang akan dihapus ---")
+                tampilkan_detail_paket(data)
+
+                konfirmasi = input("\nYakin ingin menghapus data ini? (y/n): ").strip().lower()
+                if konfirmasi == "y":
+                    database_paket.remove(data)
+                    print(f"Data paket dengan resi '{resi}' berhasil dihapus")
+                else:
+                    print("Penghapusan dibatalkan")
+                break
+            else:
+                print(f"Data paket dengan resi '{resi}' tidak ditemukan")
+                
+        # while True:
+        #     konfirmasi = input("\nYakin ingin menghapus data ini? (y/n): ").strip().lower()
+        #     if konfirmasi == "y":
+        #         database_paket.remove(data)
+        #         print(f"\nData paket dengan resi '{resi}' berhasil dihapus!")
+        #         return
+        #     elif konfirmasi == "n":
+        #         print("Penghapusan dibatalkan.")
+        #         return
+        #     else:
+        #         print("Input tidak valid. Masukkan 'y/n'.")
+            
 
 def count_data_paket():
     return len(database_paket)
