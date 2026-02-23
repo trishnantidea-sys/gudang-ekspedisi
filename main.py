@@ -617,15 +617,30 @@ def count_data_paket():
 
 ### === Menu Utama ===
 def menu_utama():
-    print("\n" + "=" * 50)
-    print("Selamat Datang di Aplikasi Gudang Ekspedisi".center(50))
-    print("D & L".center(50))
-    print("=" * 50)
-    print("1. Register")
-    print("2. Login")
-    print("3. Exit")
-    print("=" * 50)
-
+    while True:
+        print("\n" + "=" * 50)
+        print("Selamat Datang di Aplikasi Gudang Ekspedisi".center(50))
+        print("D & L".center(50))
+        print("=" * 50)
+        print("1. Register")
+        print("2. Login")
+        print("3. Exit")
+        print("=" * 50)
+            
+        opsi = input("Pilih Menu (1-3): ").strip()
+            
+        if opsi == "1":
+            registrasi()  
+        elif opsi == "2":
+            idx_user = login()
+            if idx_user is not None:
+                menu_paket()  # Jika login berhasil, masuk ke menu paket
+        elif opsi == "3":
+            print("\n" + "Exit".center(50))
+            print("Terima Kasih".center(50))
+            break
+        else:
+            print("Opsi tidak valid. Silakan pilih 1, 2, atau 3.")
 
 ## === Menu Admin Manajemen Paket ===
 def menu_paket():
@@ -642,7 +657,7 @@ def menu_paket():
         print("5. Keluar")
         print("="*50)
 
-        pilihan = input("Masukkan pilihan: ")
+        pilihan = input("Masukkan pilihan: ").strip()
 
         if pilihan == "1":
             input_data_paket()
@@ -657,25 +672,6 @@ def menu_paket():
             break
         else:
             print("Pilihan tidak valid. Silakan masukkan pilihan yang benar.")
+    return True
 
 
-program_berjalan = True
-while program_berjalan:
-    menu_utama()
-        
-    opsi = input("Pilih Menu (1/2/3): ")
-        
-    if opsi == "1":
-        registrasi()
-        
-    elif opsi == "2":
-        idx_user = login()
-        if idx_user is not None:
-            menu_paket()  # Jika login berhasil, masuk ke menu paket
-        
-    elif opsi == "3":
-        print("\n" + "Exit".center(50))
-        print("Terima Kasih".center(50))
-        program_berjalan = False
-    else:
-        print("Opsi tidak valid. Silakan pilih 1, 2, atau 3.")
