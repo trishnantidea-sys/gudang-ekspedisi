@@ -223,8 +223,6 @@ def lihat_data_paket():
             print("6. Pakaian/Tekstil")
             print("7. Sparepart")
             print("8. Kembali")
-            
-            pilihan_kat = input("Pilih kategori (1-8): ")
 
             while True:
                 pilihan_kat = input("Pilih kategori (1-8): ")
@@ -665,4 +663,5 @@ def menu_paket():
             print("Pilihan tidak valid. Silakan masukkan pilihan yang benar.")
     return True
 
-
+if __name__ == "__main__":
+    menu_utama()
