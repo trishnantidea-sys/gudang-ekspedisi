@@ -464,10 +464,16 @@ def update_data_paket():
                 choice_str = choice.replace(" ","").split(",")
                 choice_valid = True
                 for cs in choice_str:
-                    if int(cs) > 10 or int(cs) < 1:
+                    try:
+                        if int(cs) > 10 or int(cs) < 1:
+                            choice_valid = False
+                            os.system("clear")
+                            print("Pilihan tidak tersedia. Coba lagi.")
+                            break
+                    except ValueError:
                         choice_valid = False
                         os.system("clear")
-                        print("Pilihan tidak tersedia. Coba lagi.")
+                        print("Pilihan harus berupa angka. Coba lagi.")
                         break
 
                 if choice_valid == False:
@@ -579,26 +585,26 @@ def hapus_data_paket():
             break
 
              
-        for data in database_paket:
-            if data["resi"] == resi:
-                print("\n--- Data yang akan dihapus ---")
-                tampilkan_detail_paket(data)
-                break
-            else:
-                print(f"Data paket dengan resi '{resi}' tidak ditemukan")
-                return
+    for data in database_paket:
+        if data["resi"] == resi:
+            print("\n--- Data yang akan dihapus ---")
+            tampilkan_detail_paket(data)
+            break
+        else:
+            print(f"Data paket dengan resi '{resi}' tidak ditemukan")
+            return
      
-        while True:
-            konfirmasi = input("\nYakin ingin menghapus data ini? (y/n): ").strip().lower()
-            if konfirmasi == "y":
-                database_paket.remove(data)
-                print(f"Data paket dengan resi '{resi}' berhasil dihapus")
-                return
-            elif konfirmasi == "n":
-                print("Penghapusan dibatalkan")
-                return
-            else:
-                print("Input tidak valid. Masukkan 'y/n'.")   
+    while True:
+        konfirmasi = input("\nYakin ingin menghapus data ini? (y/n): ").strip().lower()
+        if konfirmasi == "y":
+            database_paket.remove(data)
+            print(f"Data paket dengan resi '{resi}' berhasil dihapus")
+            return
+        elif konfirmasi == "n":
+            print("Penghapusan dibatalkan")
+            return
+        else:
+            print("Input tidak valid. Masukkan 'y/n'.")   
 
 def count_data_paket():
     return len(database_paket)
